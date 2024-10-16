@@ -87,6 +87,10 @@ def estimate_avg_shortest_path(graph, sample_size: int = 100) -> float:
         return average_length
 
 
+def get_all_with_dist_from_node(graph, start_node: str, end_node: str):
+
+    return nx.shortest_path(graph, source=start_node, target=end_node)
+
 def graph_analysis():
     scc = nx.strongly_connected_components(G)
     scc_sorted = sorted(scc, key=len, reverse=True)
@@ -94,8 +98,27 @@ def graph_analysis():
     largest_scc = scc_sorted[0]
 
     subgraph = G.subgraph(largest_scc)
-    # diameter(subgraph)
 
+    out_degrees = dict(subgraph.out_degree())
+    average_out_degree = sum(out_degrees.values()) / subgraph.number_of_nodes()
+
+    print()
+    print(f'Number of edges: {len(G.edges())}')
+    print(f'Number of nodes: {len(G.nodes())}')
+    print(f"Average out-degree in the largest SCC: {average_out_degree}")
+    print(f"Number of scc: {len(scc_sorted)}")
+
+    start_node = 'Universitetet i Bergen'
+    end_node = 'Ringenes herre'
+    uib_lort_path = get_all_with_dist_from_node(subgraph, start_node, end_node)
+
+    print()
+    print(f"Shortest path from '{start_node}' to '{end_node}: {len(uib_lort_path)}")
+    print("With path:")
+    print(uib_lort_path)
+    print()
+
+    diameter(subgraph)
     sample_size = 1000
     estimated_avg_dist = estimate_avg_shortest_path(subgraph, sample_size)
 
