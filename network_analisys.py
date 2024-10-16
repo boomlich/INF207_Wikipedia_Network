@@ -147,12 +147,10 @@ def degree_distribution():
 
 
 def largest_degrees():
-    in_degrees = G.in_degree()  # Returns a DegreeView object (node, in-degree)
-    out_degrees = G.out_degree()  # Returns a DegreeView object (node, out-degree)
+    in_degrees = G.in_degree()
+    out_degrees = G.out_degree()
 
-    # Sort nodes by in-degree in descending order
     sorted_in_degrees = sorted(in_degrees, key=lambda x: x[1], reverse=True)
-    # Sort nodes by out-degree in descending order
     sorted_out_degrees = sorted(out_degrees, key=lambda x: x[1], reverse=True)
 
     print("#" * 20)
@@ -198,30 +196,18 @@ def draw_universities():
 
 def years():
     stats = [(year, G.in_degree(str(year)), G.out_degree(str(year))) for year in range(1800, 2030)]
-
     years = [year for year, in_deg, out_deg in stats]
     in_degrees = [in_deg for _, in_deg, _ in stats]
 
     plt.figure(figsize=(12, 6))
-
-    # Plot In-Degree
     plt.plot(years, in_degrees, label='In Degree', color='blue', linewidth=1.5)
-
-    # Add titles and labels
     plt.title('In-Degree and Out-Degree Over Years (1900-2023)', fontsize=14)
     plt.xlabel('Year', fontsize=12)
     plt.ylabel('Degree', fontsize=12)
-
-    # Add a legend
     plt.legend()
-
-    # Optional: Improve layout
     plt.tight_layout()
-
-    # Show grid
     plt.grid(True, linestyle='--', alpha=0.5)
 
-    # Display the plot
     plt.show()
 
 def find_union(a: str, b: str):
